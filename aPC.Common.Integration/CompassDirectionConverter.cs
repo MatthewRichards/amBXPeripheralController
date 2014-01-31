@@ -1,5 +1,6 @@
 ﻿using System;
 using aPC.Common.Entities;
+//REVIEW: amBXLib doesn't seem to be in git
 using amBXLib;
 
 namespace aPC.Common.Integration
@@ -13,6 +14,11 @@ namespace aPC.Common.Integration
         return null;
       }
 
+      //REVIEW: You could probably do this using reflection, since your names are the same. I can't quite decide whether 
+      // there are any major downsides to this approach, compared to yours. The biggest is probably potential 
+      // inconsistency with the fan code. Maybe you could put attributes on the LightSection members indicating which 
+      // CompassDirection they correspond to? Of course that leaks amBXLib into aPC.Common, and keeping it separate is
+      // appealing. (Oh, actually it's used elsewhere. So that argument doesn't hold water).
       switch (xiDirection)
       {
         case CompassDirection.North:

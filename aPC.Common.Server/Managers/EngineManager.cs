@@ -8,6 +8,10 @@ using System.Threading;
 namespace aPC.Common.Server.Managers
 {
   // Manages the amBXEngine interface - deals with adding and setting stuff etc.
+  //REVIEW: Possibly does too many things? I can imagine a class that just does the setup and exposes 
+  // the resulting lights etc for someone else to update. Actually I've used the word "etc" just like
+  // you did, which suggests perhaps that's one class for updating lights, one for fans, ... 
+  // Getting too fine-grained? Dunno.
   public class EngineManager : IDisposable
   {
     public EngineManager()
@@ -72,6 +76,7 @@ namespace aPC.Common.Server.Managers
         // No change - don't touch!
         return;
       }
+      //REVIEW: Where's Intensity gone?
       xiLight.Color = new amBXColor { Red = xiInputLight.Red, Green = xiInputLight.Green, Blue = xiInputLight.Blue };
       xiLight.FadeTime = xiFadeTime;
     }
@@ -106,6 +111,7 @@ namespace aPC.Common.Server.Managers
 
       try
       {
+        //REVIEW: Could have a TryGetRumbleType and avoid the exception handling and other boilerplate
         lRumbleType = RumbleTypeConverter.GetRumbleType(xiInputRumble.RumbleType);
       }
       catch (InvalidRumbleException)

@@ -50,6 +50,7 @@
     <Compile Include="Defaults\DefaultLightSections.cs" />
     <Compile Include="Defaults\DefaultLights.cs" />
     <Compile Include="Defaults\DefaultScenes.cs" />
+    <Compile Include="Defaults\SceneNameAttribute.cs" />
     <Compile Include="Entities\Component.cs" />
     <Compile Include="Entities\SectionBase.cs" />
     <Compile Include="Accessors\SceneAccessor.cs" />

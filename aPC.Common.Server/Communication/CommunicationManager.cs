@@ -8,6 +8,8 @@ namespace aPC.Common.Server.Communication
   {
     public CommunicationManager(NotificationServiceBase xiNotificationService)
     {
+      //REVIEW: Why is Open not in SetupHost? And if it's not, it might be worth changing SetupHost to return the host, and
+      // assign it in the constructor - that makes the dependency between these two lines more obvious.
       SetupHost(xiNotificationService);
       mHost.Open();
     }
@@ -34,6 +36,7 @@ namespace aPC.Common.Server.Communication
 
     public void Dispose()
     {
+      //REVIEW: What happens if Close is called twice - is that ok?
       Close();
     }
 

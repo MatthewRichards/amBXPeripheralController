@@ -6,6 +6,9 @@ namespace aPC.Common.Accessors
 {
   public class SectionAccessor
   {
+    //REVIEW: I wonder about the string description here. Particularly since there's currently just one magic value.
+    // Exactly how to resolve it is complex - on a YAGNI basis one could argue for renaming this method GetSectionOff 
+    // and omit the description parameter!
     public SectionBase GetSection(eSectionType xiFrametype, string xiDescription)
     {
       switch (xiFrametype)

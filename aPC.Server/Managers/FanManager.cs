@@ -8,7 +8,10 @@ using System.Collections.Generic;
 
 namespace aPC.Server.Managers
 {
-  class FanManager : ManagerBase
+  //REVIEW: Ok, so now I'm just showing off.. However I got a bit upset over the whole GetNext vs GetNextFrame thing.
+  // I still think it's confusing having those different names, but at least now you don't need any casts in FanActor and 
+  // it's perhaps a little more obvious what's going on :-)
+  class FanManager : ComponentManager<Fan>
   {
     public FanManager(CompassDirection xiDirection)
       : this(xiDirection, null)
@@ -33,14 +36,14 @@ namespace aPC.Server.Managers
       return lFans.Any(fan => fan != null);
     }
 
-    public override Data GetNext()
+    public override ComponentData<Fan> GetNext()
     {
       var lFrame = GetNextFrame();
       var lFan = CompassDirectionConverter.GetFan(mDirection, lFrame.Fans);
 
       return lFan == null
-        ? new ComponentData(lFrame.Length)
-        : new ComponentData(lFan, lFrame.Fans.FadeTime, lFrame.Length);
+        ? new ComponentData<Fan>(lFrame.Length)
+        : new ComponentData<Fan>(lFan, lFrame.Fans.FadeTime, lFrame.Length);
     }
 
     readonly CompassDirection mDirection;

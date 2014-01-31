@@ -36,7 +36,7 @@ namespace aPC.Client.Disco
             lArguments.GreenGenerator = GetColourWidth(lDeconstructedArgument[1]);
             break;
           case "fan":
-            lArguments.GreenGenerator = GetColourWidth(lDeconstructedArgument[1]);
+            lArguments.FanSpeedGenerator = GetColourWidth(lDeconstructedArgument[1]);
             break;
           default:
             throw new UsageException("Unknown argument: " + lDeconstructedArgument);
@@ -59,7 +59,7 @@ namespace aPC.Client.Disco
                              float.Parse(lDeconstructedWidth[1]));
     }
 
-    private List<string> mArgs;
+    private readonly List<string> mArgs;
 
   }
 }

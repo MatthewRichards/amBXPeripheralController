@@ -2,6 +2,7 @@
 {
   internal class Client
   {
+    //REVIEW: Private?
     private static void Main(string[] args)
     {
       var lClientTask = new ClientTask(args);

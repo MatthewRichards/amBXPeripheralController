@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace aPC.Common.Server.Managers
 {
-  public abstract class ManagerBase
+  //REVIEW: See FanManager re generics
+  public abstract class ManagerBase<T> where T : Data
   {
     protected ManagerBase()
     {
@@ -64,7 +65,7 @@ namespace aPC.Common.Server.Managers
 
     protected abstract bool FramesAreApplicable(List<Frame> xiFrames);
 
-    public abstract Data GetNext();
+    public abstract T GetNext();
 
     protected Frame GetNextFrame()
     {
@@ -126,6 +127,14 @@ namespace aPC.Common.Server.Managers
 
     private amBXScene mPreviousScene;
     private readonly object mSceneLock = new object();
-    private Action mEventCallback;
+    private readonly Action mEventCallback;
+  }
+
+  public abstract class ComponentManager<T> : ManagerBase<ComponentData<T>> where T : Component
+  {
+    protected ComponentManager(Action xiEventCallback)
+      : base(xiEventCallback)
+    {
+    }
   }
 }

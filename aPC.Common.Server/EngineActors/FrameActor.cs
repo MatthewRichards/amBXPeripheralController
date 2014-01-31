@@ -5,7 +5,8 @@ using System;
 
 namespace aPC.Common.Server.EngineActors
 {
-  public class FrameActor : EngineActorBase
+  //REVIEW: See FanManager re generics
+  public class FrameActor : EngineActorBase<FrameData>
   {
     public FrameActor(EngineManager xiEngine) 
       : base (xiEngine, new FrameManager())
@@ -24,7 +25,7 @@ namespace aPC.Common.Server.EngineActors
 
     protected override void ActNextFrame()
     {
-      var lFrameData = (FrameData)Manager.GetNext();
+      var lFrameData = Manager.GetNext();
       var lFrame = lFrameData.Frame;
 
       if (lFrame.Lights != null)

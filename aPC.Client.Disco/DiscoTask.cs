@@ -38,6 +38,6 @@ namespace aPC.Client.Disco
       Thread.Sleep(mSettings.PushInterval);
     }
 
-    Settings mSettings;
+    readonly Settings mSettings;
   }
 }

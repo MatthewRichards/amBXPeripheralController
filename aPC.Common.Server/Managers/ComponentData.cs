@@ -2,7 +2,8 @@
 
 namespace aPC.Common.Server.Managers
 {
-  public class ComponentData : Data
+  //REVIEW: See FanManager re generics
+  public class ComponentData<T> : Data where T : Component
   {
     /// <summary>
     /// Used when a component is not available
@@ -11,7 +12,7 @@ namespace aPC.Common.Server.Managers
     {
     }
 
-    public ComponentData(Component xiItem, int xiFadeTime, int xiLength)
+    public ComponentData(T xiItem, int xiFadeTime, int xiLength)
       : base(xiFadeTime, xiLength)
     {
       Component = xiItem;
@@ -25,6 +26,6 @@ namespace aPC.Common.Server.Managers
       }
     }
 
-    public Component Component;
+    public T Component;
   }
 }

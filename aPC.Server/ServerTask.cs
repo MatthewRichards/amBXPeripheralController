@@ -36,12 +36,13 @@ namespace aPC.Server
           else
           {
             Parallel.ForEach(mDesynchronisedManager.AllActors(), 
-                             actor => mSyncManager.RunWhileUnSynchronised(actor.Actor.Run));
+                             actor => mSyncManager.RunWhileUnSynchronised(actor.Run));
           }
         }
       }
-    }
 
+      //REVIEW: It feels like *some* way to stop this code would be nice. But maybe not :-)
+    }
 
     internal void Update(amBXScene xiScene)
     {
@@ -87,7 +88,7 @@ namespace aPC.Server
     private void UpdateUnsynchronisedActors(amBXScene xiScene)
     {
       Parallel.ForEach(mDesynchronisedManager.AllActors(),
-                       actor => actor.Actor.UpdateManager(xiScene));
+                       actor => actor.UpdateManager(xiScene));
     }
 
     /// <remarks>

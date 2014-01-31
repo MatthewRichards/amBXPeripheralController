@@ -8,7 +8,8 @@ using System.Collections.Generic;
 
 namespace aPC.Server.Managers
 {
-  class LightManager : ManagerBase
+  //REVIEW: See FanManager re generics
+  class LightManager : ComponentManager<Light>
   {
     public LightManager(CompassDirection xiDirection) 
       : this(xiDirection, null)
@@ -33,7 +34,7 @@ namespace aPC.Server.Managers
       return lLights.Any(light => light != null);
     }
 
-    public override Data GetNext()
+    public override ComponentData<Light> GetNext()
     {
       // Temporary debug trace
       Console.WriteLine(mDirection + " - GetNext     - " + DateTime.Now.Ticks);
@@ -44,8 +45,8 @@ namespace aPC.Server.Managers
       var lLight = CompassDirectionConverter.GetLight(mDirection, lFrame.Lights);
 
       return lLight == null
-        ? new ComponentData(lFrame.Length)
-        : new ComponentData(lLight, lFrame.Lights.FadeTime, lFrame.Length);
+        ? new ComponentData<Light>(lFrame.Length)
+        : new ComponentData<Light>(lLight, lFrame.Lights.FadeTime, lFrame.Length);
     }
 
     readonly CompassDirection mDirection;

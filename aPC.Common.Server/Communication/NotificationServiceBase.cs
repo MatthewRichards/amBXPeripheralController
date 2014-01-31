@@ -21,6 +21,8 @@ namespace aPC.Common.Server.Communication
         return e.ToString();
       }
 
+      //REVIEW: I'd slightly expect null. Or in fact I'd expect an exception, come to think of it... Aren't you
+      // just losing information by returning e.ToString()?
       return "";
     }
 
@@ -28,6 +30,7 @@ namespace aPC.Common.Server.Communication
     {
       try
       {
+        //REVIEW: Now... how about some dependency injection? You've got all the component parts :-)
         var lAccessor = new SceneAccessor();
         var lScene = lAccessor.GetScene(xiSceneName) ?? 
                      lAccessor.GetScene("Error_Flash");

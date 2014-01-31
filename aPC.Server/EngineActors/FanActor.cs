@@ -8,7 +8,7 @@ using amBXLib;
 
 namespace aPC.Server.EngineActors
 {
-  class FanActor : EngineActorBase
+  class FanActor : EngineActorBase<Fan>
   {
     public FanActor(CompassDirection xiDirection, EngineManager xiEngine, Action xiEventCallback) 
       : base (xiEngine, new FanManager(xiDirection, xiEventCallback))
@@ -21,18 +21,11 @@ namespace aPC.Server.EngineActors
       return eActorType.Fan;
     }
 
-    protected override void ActNextFrame()
+    protected override void Act(ComponentData<Fan> xiFanData)
     {
-      var lFanData = (ComponentData)Manager.GetNext();
-
-      if (!lFanData.IsComponentNull)
-      {
-        Engine.UpdateFan(mDirection, (Fan)lFanData.Component);
-        
-      }
-      WaitforInterval(lFanData.Length);
+      Engine.UpdateFan(mDirection, xiFanData.Component);
     }
 
-    private CompassDirection mDirection;
+    private readonly CompassDirection mDirection;
   }
 }

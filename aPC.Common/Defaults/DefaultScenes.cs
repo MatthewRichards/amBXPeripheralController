@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using aPC.Common.Entities;
 
 namespace aPC.Common.Defaults
@@ -7,6 +8,7 @@ namespace aPC.Common.Defaults
   {
     #region CruiseControl.NET Defaults
 
+    [SceneName("ccnet_red")]
     public amBXScene BuildBroken
     {
       get
@@ -19,18 +21,67 @@ namespace aPC.Common.Defaults
       }
     }
 
+    [SceneName("ccnet_green")]
     public amBXScene BuildSuccess
     {
       get
       {
-        var lScene = BasicScene;
-        var lFrame = BasicFrame;
-        lFrame.Lights = DefaultLightSections.Green;
-        lScene.Frames = new List<Frame> { lFrame };
-        return lScene;
+        //REVIEW: I feel like I want the scenes and frames to be immutable. Here's one possible solution that gets you
+        // in that direction. It doesn't actually make the classes immutable, but it becomes more obvious how you'd do it.
+        // How important is immutability? I suspect if you were to *actually* change the scenes once constructed, you might
+        // complicate your server logic someone when you come to multi-thread things. Since you presumably don't, it's sort
+        // of ok. But it's nice to make the code explicit.
+        return new SceneBuilder()
+          .WithFrame(frame => frame.WithLights(DefaultLightSections.Green))
+          .Build();
+
+        //REVIEW: I have a feeling you could do all sorts of magic by extending the builder pattern. Maybe the DefaultLightSections
+        // etc are just methods on a builder?... But I'm not sure quite how far to push this :-)
       }
     }
 
+    class SceneBuilder
+    {
+      private readonly List<Frame> mFrames = new List<Frame>();
+
+      public SceneBuilder WithFrame(Func<FrameBuilder, FrameBuilder> xiFrameBuilder)
+      {
+        mFrames.Add(xiFrameBuilder(new FrameBuilder()).Build());
+        return this;
+      }
+
+      public amBXScene Build()
+      {
+        return new amBXScene
+        {
+          IsExclusive = true,
+          Frames = mFrames
+        };
+      }
+    }
+
+    class FrameBuilder
+    {
+      private LightSection mLights;
+
+      public FrameBuilder WithLights(LightSection xiLightSection)
+      {
+        mLights = xiLightSection;
+        return this;
+      }
+
+      public Frame Build()
+      {
+        return new Frame
+        {
+          IsRepeated = true,
+          Length = 1000,
+          Lights = mLights
+        };
+      }
+    }
+
+    [SceneName("ccnet_flashingyellow")]
     public amBXScene Building
     {
       get
@@ -46,6 +97,7 @@ namespace aPC.Common.Defaults
       }
     }
 
+    [SceneName("ccnet_flashingorange")]
     public amBXScene BuildBrokenAndBuilding
     {
       get
@@ -61,6 +113,7 @@ namespace aPC.Common.Defaults
       }
     }
 
+    [SceneName("ccnet_grey")]
     public amBXScene BuildNotConnected
     {
       get
@@ -78,14 +131,7 @@ namespace aPC.Common.Defaults
 
     #region Misc
 
-    public amBXScene LightsOff
-    {
-      get
-      {
-        return BuildNotConnected;
-      }
-    }
-
+    [SceneName("default_redvsblue")]
     public amBXScene DefaultRedVsBlue
     {
       get
@@ -146,6 +192,7 @@ namespace aPC.Common.Defaults
       }
     }
 
+    [SceneName("empty")]
     public amBXScene Empty
     {
       get
@@ -156,6 +203,7 @@ namespace aPC.Common.Defaults
       }
     }
 
+    [SceneName("error_flash")]
     public amBXScene Error_Flash
     {
       get
@@ -183,6 +231,7 @@ namespace aPC.Common.Defaults
 
     #region PoolQ2
 
+    [SceneName("poolq2_event")]
     public amBXScene PoolQ2_Event
     {
       get
@@ -246,6 +295,7 @@ namespace aPC.Common.Defaults
 
     #region Shiprec
 
+    [SceneName("shiprec_praise")]
     public amBXScene Shiprec_Praise
     {
       get

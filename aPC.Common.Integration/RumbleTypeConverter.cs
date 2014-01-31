@@ -4,6 +4,9 @@ namespace aPC.Common.Integration
 {
   public static class RumbleTypeConverter
   {
+    //REVIEW: I like having an enum for the rumble types. So it feels a bit of a shame that you use strings
+    // everywhere and just convert them at this point.
+    // I'd also rather this was done without a big switch-block, using some manner of reflection.
     public static RumbleType GetRumbleType(string xiRumbleType)
     {
       switch (xiRumbleType.ToLower())

@@ -17,6 +17,7 @@ namespace aPC.Common.Entities
     public bool IsExclusive;
 
     [XmlAttribute]
+    //REVIEW: You should use /// comments, and make these proper documentation rather than just notes for someone reading the source code
     // If IsEvent = true, this scene is for an "event":
     // * Ignore IsRepeatable booleans
     // * Once all frames have been run, return to the previously running Scene.

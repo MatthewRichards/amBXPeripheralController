@@ -38,10 +38,11 @@ namespace aPC.Server
       mDesynchronisedActors.Add(new DesynchronisedActor(CompassDirection.Everywhere, new RumbleActor(CompassDirection.Everywhere, xiEngine, xiAction)));
     }
 
-    public List<DesynchronisedActor> ActorsWithType(eActorType xiActorType)
+    //REVIEW: I couldn't find any code using this method! But I reckon the new version would be easier to use...
+    public List<DesynchronisedActor<T>> ActorsWithType<T>() where T:Component
     {
       return mDesynchronisedActors
-        .Where(actor => actor.ActorType == xiActorType)
+        .OfType<DesynchronisedActor<T>>()
         .ToList();
     }
 

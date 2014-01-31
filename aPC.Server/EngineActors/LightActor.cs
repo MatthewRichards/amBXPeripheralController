@@ -8,7 +8,7 @@ using System;
 
 namespace aPC.Server.EngineActors
 {
-  class LightActor : EngineActorBase
+  class LightActor : EngineActorBase<Light>
   {
     public LightActor(CompassDirection xiDirection, EngineManager xiEngine, Action xiEventCallback) 
       : base (xiEngine, new LightManager(xiDirection, xiEventCallback))
@@ -21,19 +21,11 @@ namespace aPC.Server.EngineActors
       return eActorType.Light;
     }
 
-    protected override void ActNextFrame()
+    protected override void Act(ComponentData<Light> xiLightData)
     {
-      var lLightData = (ComponentData)Manager.GetNext();
-      
-      
-      if (!lLightData.IsComponentNull)
-      {
-        // Temporary Debug trace:
-        Console.WriteLine(mDirection + " - UpdateLight - " + DateTime.Now.Ticks);
-        Engine.UpdateLight(mDirection, (Light)lLightData.Component, lLightData.FadeTime);
-      }
-
-      WaitforInterval(lLightData.Length);
+      // Temporary Debug trace:
+      Console.WriteLine(mDirection + " - UpdateLight - " + DateTime.Now.Ticks);
+      Engine.UpdateLight(mDirection, xiLightData.Component, xiLightData.FadeTime);
     }
 
     private readonly CompassDirection mDirection;

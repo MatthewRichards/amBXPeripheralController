@@ -52,7 +52,7 @@ namespace aPC.Server
       }
     }
 
-    private object mLocker = new object();
+    private readonly object mLocker = new object();
 
     private bool mIsSynchronised;
     private bool mWasPreviouslySynchronised;

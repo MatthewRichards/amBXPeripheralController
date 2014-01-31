@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace aPC.Common.Server.Managers
 {
-  public class FrameManager : ManagerBase
+  //REVIEW: See FanManager re generics
+  public class FrameManager : ManagerBase<FrameData>
   {
     public FrameManager() 
       : this(null)
@@ -28,9 +29,10 @@ namespace aPC.Common.Server.Managers
       return lFrames.Any(frame => frame != null);
     }
 
-    public override Data GetNext()
+    public override FrameData GetNext()
     {
       var lFrame = GetNextFrame();
+      //REVIEW: FrameData should just take a Frame maybe?
       return new FrameData(lFrame, 0, lFrame.Length);
     }
   }

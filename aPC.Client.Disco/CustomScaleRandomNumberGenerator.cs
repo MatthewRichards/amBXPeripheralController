@@ -11,15 +11,15 @@ namespace aPC.Client.Disco
     {
       mGenerator = new Random();
 
-      Minimum = xiMinimum;
-      Maximum = xiMaximum;
+      mMinimum = xiMinimum;
+      mMaximum = xiMaximum;
     }
 
     public float GetNext
     {
       get
       {
-        return ((float)mGenerator.NextDouble() * Width) + Minimum;
+        return ((float)mGenerator.NextDouble() * Width) + mMinimum;
       }
     }
 
@@ -27,12 +27,12 @@ namespace aPC.Client.Disco
     {
       get
       {
-        return Maximum - Minimum;
+        return mMaximum - mMinimum;
       }
     }
 
-    private float Minimum;
-    private float Maximum;
-    private Random mGenerator;
+    private readonly float mMinimum;
+    private readonly float mMaximum;
+    private readonly Random mGenerator;
   }
 }

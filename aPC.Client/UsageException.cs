@@ -23,6 +23,7 @@ namespace aPC.Client
 
       if (mException != null)
       {
+        //REVIEW: You should just write mException, not its component parts. This will omit any inner exceptions.
         Console.WriteLine("Underlying Exception: " + 
                           Environment.NewLine + mException.Message +
                           Environment.NewLine + mException.StackTrace);
@@ -33,6 +34,7 @@ namespace aPC.Client
     private readonly Exception mException;
     private readonly string mUserDescription;
 
+    //REVIEW: It looks to me like relative paths are supported...
     private const string mUsage = 
 @"Usage: Client [/I | /F] argument
 

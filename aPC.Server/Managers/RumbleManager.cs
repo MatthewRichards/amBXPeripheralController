@@ -8,7 +8,8 @@ using System.Collections.Generic;
 
 namespace aPC.Server.Managers
 {
-  class RumbleManager : ManagerBase
+  //REVIEW: See FanManager re generics
+  class RumbleManager : ComponentManager<Rumble>
   {
     public RumbleManager(CompassDirection xiDirection) 
       : this(xiDirection, null)
@@ -32,7 +33,7 @@ namespace aPC.Server.Managers
       return lRumbles.Any(rumble => rumble != null);
     }
 
-    public override Data GetNext()
+    public override ComponentData<Rumble> GetNext()
     {
       var lFrame = GetNextFrame();
 
@@ -41,8 +42,8 @@ namespace aPC.Server.Managers
         : lFrame.Rumbles.Rumble;
 
       return lRumble == null
-        ? new ComponentData(lFrame.Length)
-        : new ComponentData(lRumble, lFrame.Rumbles.FadeTime, lFrame.Length);
+        ? new ComponentData<Rumble>(lFrame.Length)
+        : new ComponentData<Rumble>(lRumble, lFrame.Rumbles.FadeTime, lFrame.Length);
 
     }
 

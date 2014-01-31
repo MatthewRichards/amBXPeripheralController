@@ -4,9 +4,32 @@ using System.Threading;
 
 namespace aPC.Common.Server.EngineActors
 {
-  public abstract class EngineActorBase
+  //REVIEW: See FanManager re generics
+  public abstract class ComponentActor<T> : EngineActorBase<ComponentData<T>> where T : Component
   {
-    protected EngineActorBase(EngineManager xiEngine, ManagerBase xiManager)
+    protected ComponentActor(EngineManager xiEngine, ComponentManager<T> xiManager) 
+      : base(xiEngine, xiManager)
+    {
+    }
+    
+    protected abstract void Act(ComponentData<T> xiComponent);
+
+    protected override void ActNextFrame()
+    {
+      var lRumbleData = Manager.GetNext();
+
+      if (!lRumbleData.IsComponentNull)
+      {
+        Act(lRumbleData);
+      }
+
+      WaitforInterval(lRumbleData.Length);
+    }
+  }
+
+  public abstract class EngineActorBase<T> where T : Data
+  {
+    protected EngineActorBase(EngineManager xiEngine, ManagerBase<T> xiManager)
     {
       Engine = xiEngine;
       Manager = xiManager;
@@ -30,10 +53,6 @@ namespace aPC.Common.Server.EngineActors
       }
     }
 
-    /// <remarks>
-    ///   Note that this method should take into account any waiting that should be 
-    ///   done (before acting the next frame)
-    /// </remarks>
     protected abstract void ActNextFrame();
 
     protected void WaitforInterval(int xiLength)
@@ -59,7 +78,7 @@ namespace aPC.Common.Server.EngineActors
       }
     }
 
-    protected ManagerBase Manager;
+    protected ManagerBase<T> Manager;
     protected EngineManager Engine;
   }
 }
